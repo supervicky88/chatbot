@@ -7,12 +7,12 @@ from langchain.chains import SequentialChain
 from langchain.prompts import PromptTemplate
 from fastapi import FastAPI
 from pydantic import BaseModel
-import streamlit as st
 import requests
 from dotenv import load_dotenv
 from chromadb.config import Settings
 from langchain.docstore.document import Document
 import chromadb
+from typing import List
 
 load_dotenv()
 
@@ -26,7 +26,7 @@ embeddings = OpenAIEmbeddings()
 # Specify persist directory
 persist_directory = './chroma_db'
 # Split the document into chunks
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=300)
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=500)
 docs = text_splitter.split_documents(documents)
 
 # Define Chroma settings
@@ -76,22 +76,37 @@ print("Answer:", result)
 
 app = FastAPI()
 
-class Query(BaseModel):
-    question: str
+class Message(BaseModel):
+    role: str
+    content: str
+
+# Define query payload structure
+class QueryPayload(BaseModel):
+    messages: List[Message]
 
 @app.post("/query")
-def query_chain(request: Query):
-    query = request.question  # Extract the query from the request
-    response = qa_chain.invoke({"query": query})  # Use `invoke` instead of `run`
-    result = response["result"]
-    source_documents = response["source_documents"]
+def query_chain(payload: QueryPayload):
+    # Validate input
+    if not payload.messages or len(payload.messages) == 0:
+        raise HTTPException(status_code=422, detail="No messages provided.")
+
+    # Extract query from the first message
+    query = payload.messages[-1].content
+    print(f"Received query: {query}")
+
+    # Process the query through the chain
+    try:
+        response = qa_chain.invoke({"query": query})
+        result = response["result"]
+        #source_documents = response["source_documents"]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
     return {
         "response": result,
-        "source_documents": [doc.page_content for doc in source_documents]  # Optional: Return document content
+        "source_documents": [doc.page_content for doc in source_documents]
     }
-
 
 @app.get("/")
 def root():
     return {"message": "Welcome to the chatbot API. Use the /query endpoint to ask questions."}
-
