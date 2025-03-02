@@ -1,0 +1,25 @@
+# FastAPI and ASGI server
+fastapi==0.95.2
+uvicorn==0.22.0
+
+# OpenAI and LangChain integration
+langchain==0.0.232
+openai==0.27.10
+
+# Vector database for document storage
+chromadb==0.4.3
+
+# Streamlit for testing the chatbot locally
+streamlit==1.25.0
+
+# Environment variable management
+python-dotenv==1.0.0
+
+# HTTP requests
+requests==2.31.0
+
+# Data validation
+pydantic==1.10.9
+
+# Unit testing and debugging
+pytest==7.4.0
