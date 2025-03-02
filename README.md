@@ -1,7 +1,7 @@
-Project Overview
+## Project Overview
 The backend for the Learn Prompting Chatbot is built using FastAPI and integrates with the OpenAI GPT-4o-mini model for language processing. The system is designed for efficient handling of user queries, seamless database operations, and robust API endpoints.
 
-Features
+## Features
 Chatbot API: Handles user queries using FastAPI and integrates with OpenAI's GPT-4o-mini model.
 
 Retrieval-Augmented Generation (RAG): Enhances chatbot responses using LangChain with customized documentation.
@@ -10,7 +10,8 @@ Database Integration: Connects to chromdb as a vector store for embeddings.
 
 Testing and Debugging: Includes unit tests for backend components.
 
-Dependencies
+## Dependencies
+
 Key Libraries and Tools
 
 FastAPI: Backend framework for building APIs.
@@ -27,7 +28,8 @@ Pytest: For unit testing backend functionality.
 
 Refer to requirements.txt for a complete list of dependencies.
 
-Installation and Setup
+## Installation and Setup
+
 Prerequisites
 
 Python 3.11
@@ -36,22 +38,26 @@ Environment Variables in .env:
 
 OPENAI_API_KEY=<your_openai_api_key>
 
-Installation
+## Installation
+
 Clone the repository:git clone https://github.com/UMDMSISCapstone/learn-prompting-chatbot-python.git
 
 Install dependencies:
 
 pip install -r requirements.txt
 
-Start the FastAPI server:
+## Start the FastAPI server:
+
 uvicorn main:app --reload
 
 Access the API documentation at http://localhost:8000.
 
-Test backend
+## Test backend
+
 streamlit run bot.py
 
-Deployment
+## Deployment
+
 Docker:
 
 Build and run the application using Docker for consistent deployment:
@@ -66,7 +72,8 @@ Deploy on AWS
 
 Use managed PostgreSQL services like AWS RDS for the database.
 
-Troubleshooting
+## Troubleshooting
+
 API Errors:
 
 Ensure the FastAPI server is running.
@@ -79,7 +86,8 @@ Ensure the OpenAI API key is valid.
 
 Debug with logs for model response issues.
 
-Contact Information
+## Contact Information
+
 For issues or support:
 
 Website: https://learnprompting.org/
